@@ -1,0 +1,8 @@
+node_modules
+coverage
+*.DS_Store
+.DS_Store
+*.sln
+Web.config
+npm-debug.log
+.editorconfig
