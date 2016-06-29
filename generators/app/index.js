@@ -7,7 +7,7 @@ var _ = require('lodash');
 var path = require('path');
 var exec = require('child_process').exec;
 
-function createProject (name) {
+function createProject(name) {
   name = _.kebabCase(name);
   return name;
 }
@@ -21,7 +21,7 @@ module.exports = yeoman.Base.extend({
 
   prompting: function () {
     var done = this.async();
-    this.log('Follow the prompts to get your project started.\n' );
+    this.log('Follow the prompts to get your project started.\n');
 
     var prompts = [{
       type: 'input',
@@ -29,7 +29,7 @@ module.exports = yeoman.Base.extend({
       message: 'Your project name',
       default: createProject(path.basename(process.cwd())),
       filter: createProject,
-      validate: function(str) {
+      validate: function (str) {
         return str.length > 0;
       },
       store: true
