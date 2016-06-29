@@ -30,8 +30,6 @@ MIT © [Punk]()
 
 [npm-image]: https://badge.fury.io/js/generator-html-5-bp.svg
 [npm-url]: https://npmjs.org/package/generator-html-5-bp
-[travis-image]: https://travis-ci.org//generator-html-5-bp.svg?branch=master
-[travis-url]: https://travis-ci.org//generator-html-5-bp
-[daviddm-image]: https://david-dm.org//generator-html-5-bp.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org//generator-html-5-bp
+[travis-image]: https://travis-ci.org/PUNKZA/generator-html-5-bp.svg?branch=master
+[travis-url]: https://travis-ci.org/PUNKZA/generator-html-5-bp
 =======
