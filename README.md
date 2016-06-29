@@ -1,4 +1,4 @@
-# generator-html-5-bp [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# generator-html-5-bp [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 > A simple html5 &amp; grunt setup for front end web development
 
 ## Installation
