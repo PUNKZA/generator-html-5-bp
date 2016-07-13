@@ -6,10 +6,18 @@ var mkdirp = require('mkdirp');
 var _ = require('lodash');
 var path = require('path');
 var exec = require('child_process').exec;
+var execs = require('child_process').execSync;
 
 function createProject(name) {
   name = _.kebabCase(name);
   return name;
+}
+
+function initLaravel(name, context) {
+  context.log(chalk.blue('Creating Laravel project via Composer in ' + path.resolve('./' + name)));
+  execs('composer create-project laravel/laravel ./' + name, {
+    stdio: [0,1,2]
+  });
 }
 
 module.exports = yeoman.Base.extend({
@@ -33,12 +41,38 @@ module.exports = yeoman.Base.extend({
         return str.length > 0;
       },
       store: true
+    },{
+      type: 'list',
+      name: 'backend',
+      message: 'Are you generating a static project, or using a framework?',
+      filter: function(val) {
+        if(val !== '1' && val !== '2') {
+          val = '1';
+        }
+
+        return val;
+      },
+      choices: [{
+        name: 'Static',
+        value: '1'
+      },{
+        name: 'Laravel',
+        value: '2'
+      }],
+      store: true
     }];
 
     return this.prompt(prompts).then(function (props) {
       // To access props later use this.props.someAnswer;
       this.props = props;
       this.log('Your project name is', this.props.name, '\n');
+
+      this.props.basedir = path.resolve(process.cwd() + '/' + this.props.name);
+      this.log(chalk.green('Project basedir set to: ' + this.props.basedir));
+
+      if(this.props.backend == '2') {
+        initLaravel(this.props.name, this);
+      }
 
       done();
     }.bind(this));
@@ -52,18 +86,45 @@ module.exports = yeoman.Base.extend({
     }
   },
 
+  directories: function() {
+    // Static template
+    if(this.props.backend === '1') {
+      this.props.dir_base = 'dev';
+      this.props.dir_assets = 'dev/assets';
+      this.props.dir_css = 'dev/assets/css';
+      this.props.dir_js = 'dev/assets/js';
+      this.props.dir_sass = 'dev/assets/sass';
+      this.props.dir_img = 'dev/assets/img';
+      this.props.dir_fonts = 'dev/assets/fonts';
+      this.props.dir_templates = 'dev/templates';
+      this.props.dir_partials = 'dev/templates/partials';
+    }
+    // Laravel project
+    else if(this.props.backend === '2') {
+      this.props.dir_base = 'resources';
+      this.props.dir_assets = 'resources/assets';
+      this.props.dir_css = 'resources/assets/css';
+      this.props.dir_js = 'resources/assets/js';
+      this.props.dir_sass = 'resources/assets/sass';
+      this.props.dir_img = 'public/assets/img';
+      this.props.dir_fonts = 'public/assets/fonts';
+      this.props.dir_templates = 'resources/views';
+      this.props.dir_partials = 'resources/views/partials';
+    }
+  },
+
   scaffolding: function () {
-    mkdirp('dev');
+    mkdirp(this.props.dir_base);
 
-    mkdirp('dev/assets');
-    mkdirp('dev/assets/css');
-    mkdirp('dev/assets/js');
-    mkdirp('dev/assets/sass');
-    mkdirp('dev/assets/img');
-    mkdirp('dev/assets/fonts');
+    mkdirp(this.props.dir_assets);
+    mkdirp(this.props.dir_css);
+    mkdirp(this.props.dir_js);
+    mkdirp(this.props.dir_sass);
+    mkdirp(this.props.dir_img);
+    mkdirp(this.props.dir_fonts);
 
-    mkdirp('dev/templates');
-    mkdirp('dev/templates/partials');
+    mkdirp(this.props.dir_templates);
+    mkdirp(this.props.dir_partials);
 
     this.log('Scaffold created \n');
   },
@@ -72,42 +133,42 @@ module.exports = yeoman.Base.extend({
     // copy base template
     this.fs.copy(
       this.templatePath('_index.html'),
-      this.destinationPath('dev/templates/index.html')
+      this.destinationPath(this.props.dir_templates + '/index.html')
     );
 
     this.fs.copy(
       this.templatePath('_header.html'),
-      this.destinationPath('dev/templates/partials/header.html')
+      this.destinationPath(this.props.dir_partials + '/header.html')
     );
 
     this.fs.copy(
       this.templatePath('_footer.html'),
-      this.destinationPath('dev/templates/partials/footer.html')
+      this.destinationPath(this.props.dir_partials + '/footer.html')
     );
 
     this.fs.copy(
       this.templatePath('_default.sass'),
-      this.destinationPath('dev/assets/sass/default.sass')
+      this.destinationPath(this.props.dir_sass + '/default.sass')
     );
 
     this.fs.copy(
       this.templatePath('_smart.sass'),
-      this.destinationPath('dev/assets/sass/smart.sass')
+      this.destinationPath(this.props.dir_sass + '/smart.sass')
     );
 
     this.fs.copy(
       this.templatePath('_library.sass'),
-      this.destinationPath('dev/assets/sass/_library.sass')
+      this.destinationPath(this.props.dir_sass + '/_library.sass')
     );
 
     this.fs.copy(
       this.templatePath('_normalize.sass'),
-      this.destinationPath('dev/assets/sass/normalize.sass')
+      this.destinationPath(this.props.dir_sass + '/normalize.sass')
     );
 
     this.fs.copy(
       this.templatePath('_index.js'),
-      this.destinationPath('dev/assets/js/index.js')
+      this.destinationPath(this.props.dir_js + '/index.js')
     );
 
     // copy config files
@@ -147,4 +208,3 @@ module.exports = yeoman.Base.extend({
     this.log(yosay('Goodbye! '));
   }
 });
-
