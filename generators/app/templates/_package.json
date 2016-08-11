@@ -5,7 +5,7 @@
   "private": true,
   "engineStrict" : true,
   "engines": {
-    "node": ">=0.10 <0.12"
+    "node": ">=4.4.5"
   },
   "devDependencies": {
     "assemble": "~0.4.33",
@@ -13,7 +13,7 @@
     "express": "^4.13.4",
     "css-sprite": "^0.9.8",
     "grunt": "~0.4.0",
-    "grunt-autoprefixer": "*",
+    "autoprefixer": "*",
     "grunt-compile-handlebars": "^1.0.1",
     "grunt-contrib-concat": "*",
     "grunt-contrib-copy": "^0.7.0",
@@ -29,6 +29,7 @@
     "path": "^0.12.7"
   },
   "scripts": {
-    "start": "grunt build"
+    "start": "grunt build",
+    "serve": "grunt build && grunt express"
   }
 }

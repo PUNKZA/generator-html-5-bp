@@ -23,7 +23,7 @@ function initLaravel(name, context) {
 module.exports = yeoman.Base.extend({
   initializing: function () {
     // Yeoman greets user and outputs version
-    this.log(yosay('This is PUNK\'s ' + chalk.blue('custom boilerplate') + ' generator!\n\n'));
+    this.log(yosay('This is PUNK\'s ' + chalk.blue('custom web') + ' generator!\n\n'));
     this.props = {};
   },
 
@@ -44,7 +44,7 @@ module.exports = yeoman.Base.extend({
     },{
       type: 'list',
       name: 'backend',
-      message: 'Are you generating a static project, or using a framework?',
+      message: 'Are you generating a static html project, or a php application?',
       filter: function(val) {
         if(val !== '1' && val !== '2') {
           val = '1';
@@ -53,10 +53,10 @@ module.exports = yeoman.Base.extend({
         return val;
       },
       choices: [{
-        name: 'Static',
+        name: 'Static (No Backend)',
         value: '1'
       },{
-        name: 'Laravel',
+        name: 'PHP (Laravel)',
         value: '2'
       }],
       store: true
@@ -89,42 +89,44 @@ module.exports = yeoman.Base.extend({
   directories: function() {
     // Static template
     if(this.props.backend === '1') {
-      this.props.dir_base = 'dev';
-      this.props.dir_assets = 'dev/assets';
-      this.props.dir_css = 'dev/assets/css';
-      this.props.dir_js = 'dev/assets/js';
-      this.props.dir_sass = 'dev/assets/sass';
-      this.props.dir_img = 'dev/assets/img';
-      this.props.dir_fonts = 'dev/assets/fonts';
-      this.props.dir_templates = 'dev/templates';
-      this.props.dir_partials = 'dev/templates/partials';
+      this.props.dir = 'dev/assets';
+      this.props.dev_css = 'dev/assets/css';
+      this.props.dev_js = 'dev/assets/js/partials';
+      this.props.dev_sass = 'dev/assets/sass';
+      this.props.dev_templates = 'dev/assets/templates/partials';
+      this.props.dev_sprites = 'dev/assets/sprites';
+
+      this.props.dist_css = 'dist/assets/css';
+      this.props.dist_js = 'dist/html/js/vendor';
+      this.props.dist_img = 'dist/html/img';
+      this.props.dist_fonts = 'dist/html/fonts';
     }
     // Laravel project
     else if(this.props.backend === '2') {
-      this.props.dir_base = 'resources';
-      this.props.dir_assets = 'resources/assets';
-      this.props.dir_css = 'resources/assets/css';
-      this.props.dir_js = 'resources/assets/js';
-      this.props.dir_sass = 'resources/assets/sass';
-      this.props.dir_img = 'public/assets/img';
-      this.props.dir_fonts = 'public/assets/fonts';
-      this.props.dir_templates = 'resources/views';
-      this.props.dir_partials = 'resources/views/partials';
+      this.props.dir = 'resources/assets';
+      this.props.dev_css = 'resources/assets/css';
+      this.props.dev_js = 'resources/assets/js/partials';
+      this.props.dev_sass = 'resources/assets/sass';
+      this.props.dev_templates = 'resources/assets/templates/partials';
+      this.props.dev_sprites = 'resources/assets/sprites';
+
+      this.props.dist_css = 'public/assets/css';
+      this.props.dist_js = 'public/assets/js/vendor';
+      this.props.dist_img = 'public/assets/img';
+      this.props.dist_fonts = 'public/assets/fonts';
     }
   },
 
   scaffolding: function () {
-    mkdirp(this.props.dir_base);
-
-    mkdirp(this.props.dir_assets);
-    mkdirp(this.props.dir_css);
-    mkdirp(this.props.dir_js);
-    mkdirp(this.props.dir_sass);
-    mkdirp(this.props.dir_img);
-    mkdirp(this.props.dir_fonts);
-
-    mkdirp(this.props.dir_templates);
-    mkdirp(this.props.dir_partials);
+    mkdirp(this.props.dev_css);
+    mkdirp(this.props.dev_js);
+    mkdirp(this.props.dev_sass);
+    mkdirp(this.props.dev_templates);
+    mkdirp(this.props.dev_sprites);
+    mkdirp(this.props.dist_css);
+    mkdirp(this.props.dist_js);
+    mkdirp(this.props.dist_img);
+    mkdirp(this.props.dist_fonts);
 
     this.log('Scaffold created \n');
   },
@@ -133,42 +135,27 @@ module.exports = yeoman.Base.extend({
     // copy base template
     this.fs.copy(
       this.templatePath('_index.html'),
-      this.destinationPath(this.props.dir_templates + '/index.html')
+      this.destinationPath(this.props.dir + '/templates/index.html')
     );
 
     this.fs.copy(
       this.templatePath('_header.html'),
-      this.destinationPath(this.props.dir_partials + '/header.html')
+      this.destinationPath(this.props.dev_templates + '/header.html')
     );
 
     this.fs.copy(
       this.templatePath('_footer.html'),
-      this.destinationPath(this.props.dir_partials + '/footer.html')
+      this.destinationPath(this.props.dev_templates + '/footer.html')
     );
 
     this.fs.copy(
-      this.templatePath('_default.sass'),
-      this.destinationPath(this.props.dir_sass + '/default.sass')
-    );
-
-    this.fs.copy(
-      this.templatePath('_smart.sass'),
-      this.destinationPath(this.props.dir_sass + '/smart.sass')
-    );
-
-    this.fs.copy(
-      this.templatePath('_library.sass'),
-      this.destinationPath(this.props.dir_sass + '/_library.sass')
-    );
-
-    this.fs.copy(
-      this.templatePath('_normalize.sass'),
-      this.destinationPath(this.props.dir_sass + '/normalize.sass')
+      this.templatePath('sass/**/*'), 
+      this.destinationPath(this.props.dir + '/sass')
     );
 
     this.fs.copy(
       this.templatePath('_index.js'),
-      this.destinationPath(this.props.dir_js + '/index.js')
+      this.destinationPath(this.props.dir + '/js/index.js')
     );
 
     // copy config files
@@ -200,11 +187,14 @@ module.exports = yeoman.Base.extend({
     this.log(chalk.blue('Will reinit git repo if there is an existing one otherwise will init one for you in the newly created project.'));
     // this.spawnCommand('git', ['init']);
     exec('git init');
-    exec('touch .gitignore');
+  },
+
+  install: function() {
+    this.npmInstall();
   },
 
   end: function () {
-    this.log(chalk.bgGreen('Everything is prepared. Now make sure you have the right node version and run npm install'));
+    this.log(chalk.bgGreen('Everything is prepared. If npm failed make sure you have the right node version and run npm install once more'));
     this.log(yosay('Goodbye! '));
   }
 });

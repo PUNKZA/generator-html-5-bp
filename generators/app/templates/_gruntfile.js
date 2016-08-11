@@ -23,12 +23,25 @@ module.exports = function (grunt) {
       },
       default: {
         src: 'dev/assets/css/default.noprefix.css',
-        dest: 'site/assets/css/default.css'
+        dest: 'dist/assets/css/default.css'
       },
       smart: {
         src: 'dev/assets/css/smart.noprefix.css',
-        dest: 'site/assets/css/smart.css'
+        dest: 'dist/assets/css/smart.css'
       }
+    },
+
+    // css min
+    cssmin: {
+        target: {
+            files: [{
+                expand: true,
+                cwd: 'dist/assets/css',
+                src: ['*.css', '!*.min.css'],
+                dest: 'dist/assets/css',
+                ext: '.min.css'
+            }]
+        }
     },
 
     // copy assets
@@ -37,7 +50,7 @@ module.exports = function (grunt) {
         cwd: 'dev/assets/js',
         src: '**',
         expand: true,
-        dest: 'site/assets/js',
+        dest: 'dist/assets/js',
         flatten: false
       }
     },
@@ -59,7 +72,7 @@ module.exports = function (grunt) {
       globbedTemplateAndOutput: {
         template: 'dev/templates/*.html',
         templateData: 'dev/templates/**/**/*.json',
-        output: 'site/*.html',
+        output: 'dist/*.html',
         partials: 'dev/templates/partials/**/*.html'
       }
     },
@@ -90,14 +103,14 @@ module.exports = function (grunt) {
     // configure live reload
     livereload: {
       options: {
-        base: 'site'
+        base: ''
       },
-      files: ['site/**/*']
+      files: ['dist/**/*']
     }
   });
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
   require('matchdep').filterDev('css-sprite').forEach(grunt.loadNpmTasks);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['copy', 'css_sprite', 'sass', 'compile-handlebars', 'autoprefixer', 'express', 'watch', 'livereload']);
+  grunt.registerTask('build', ['copy', 'css_sprite', 'sass', 'compile-handlebars', 'autoprefixer', 'cssmin', 'watch', 'livereload']);
 };

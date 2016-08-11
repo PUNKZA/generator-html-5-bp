@@ -1,0 +1,54 @@
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, a, p, dl, dt, dd
+	margin: 0
+	padding: 0
+
+html
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
+
+body 
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+	color: $default
+	background-color: $white
+	+font-size(16, no, 28)
+	+min-break($tablet)
+		+font-size(18, no, 28)
+
+h1
+	+font-size(24, 30, 30)
+	+min-break($tablet)
+		+font-size(36, 48, 48)
+h2
+	+font-size(22, 25, 30)
+	+min-break($tablet)
+		+font-size(30, 35, 38)
+h3
+	+font-size(18, 20, 25)
+	+min-break($tablet)
+		+font-size(26, 28, 34)
+h4
+	+font-size(18, 15, 26)
+
+p
+	// inherit body font properties
+	margin-bottom: $space-v-desktop
+
+// lists
+ul, ol
+	list-style: none
+	margin-bottom: $space-v-desktop
+	li
+		// inherit body font properties
+		margin-bottom: 10px
+
+// Links
+a
+	text-decoration: none
+	color: $default
+	&:hover
+		outline: none
+		text-decoration: underline
+	&:visited
+		color: inherit 
+
+
