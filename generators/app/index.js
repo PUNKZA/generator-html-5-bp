@@ -1,4 +1,3 @@
-'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
@@ -60,6 +59,16 @@ module.exports = yeoman.Base.extend({
         value: '2'
       }],
       store: true
+    },{
+      type: 'checkbox',
+      name: 'sprite',
+      message: 'Would you like sprite generation? ' + chalk.blue('Note: You will need to use node versions 0.12 and below to use'),
+      choices: [
+        'css-sprite'
+      ],
+      default: [
+        false
+      ]
     }];
 
     return this.prompt(prompts).then(function (props) {
@@ -93,7 +102,7 @@ module.exports = yeoman.Base.extend({
       this.props.dev_css = 'dev/assets/css';
       this.props.dev_js = 'dev/assets/js/partials';
       this.props.dev_sass = 'dev/assets/sass';
-      this.props.dev_templates = 'dev/templates/partials';
+      this.props.dev_templates = 'dev/templates/';
       this.props.dev_sprites = 'dev/assets/sprites';
 
       this.props.dist_css = 'dist/assets/css';
@@ -117,7 +126,8 @@ module.exports = yeoman.Base.extend({
     }
   },
 
-  scaffolding: function () {kmkdirp(this.props.dev_css);
+  scaffolding: function () {
+    mkdirp(this.props.dev_css);
     mkdirp(this.props.dev_js);
     mkdirp(this.props.dev_sass);
     mkdirp(this.props.dev_templates);
@@ -134,17 +144,17 @@ module.exports = yeoman.Base.extend({
     // copy base template
     this.fs.copy(
       this.templatePath('_index.html'),
-      this.destinationPath(this.props.dir + '/templates/index.html')
+      this.destinationPath(this.props.dev_templates + '/index.html')
     );
 
     this.fs.copy(
       this.templatePath('_header.html'),
-      this.destinationPath(this.props.dev_templates + '/header.html')
+      this.destinationPath(this.props.dev_templates + '/partials/header.html')
     );
 
     this.fs.copy(
       this.templatePath('_footer.html'),
-      this.destinationPath(this.props.dev_templates + '/footer.html')
+      this.destinationPath(this.props.dev_templates + '/partials/footer.html')
     );
 
     this.fs.copy(
@@ -161,7 +171,8 @@ module.exports = yeoman.Base.extend({
     this.fs.copyTpl(
       this.templatePath('_package.json'),
       this.destinationPath('package.json'), {
-        name: this.props.name
+        name: this.props.name,
+        gensprite: this.props.sprite[0]
       }
     );
 
