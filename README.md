@@ -21,8 +21,8 @@ yo html-5-bp
 ## Note:
 
 If you wish to run the php generator you will be required to have the following installed on your machine.
-	* PHP >= 5.5.9
-	* Composer (Dependency manager)
+ * PHP >= 5.5.9
+ * Composer (Dependency manager)
 
 Refer to these docs if you'd like to know more https://laravel.com/docs/5.1/installation
 
