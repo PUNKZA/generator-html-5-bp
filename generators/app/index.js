@@ -93,13 +93,13 @@ module.exports = yeoman.Base.extend({
       this.props.dev_css = 'dev/assets/css';
       this.props.dev_js = 'dev/assets/js/partials';
       this.props.dev_sass = 'dev/assets/sass';
-      this.props.dev_templates = 'dev/assets/templates/partials';
+      this.props.dev_templates = 'dev/templates/partials';
       this.props.dev_sprites = 'dev/assets/sprites';
 
       this.props.dist_css = 'dist/assets/css';
-      this.props.dist_js = 'dist/html/js/vendor';
-      this.props.dist_img = 'dist/html/img';
-      this.props.dist_fonts = 'dist/html/fonts';
+      this.props.dist_js = 'dist/assets/js/vendor';
+      this.props.dist_img = 'dist/assets/img';
+      this.props.dist_fonts = 'dist/assets/fonts';
     }
     // Laravel project
     else if(this.props.backend === '2') {
@@ -117,8 +117,7 @@ module.exports = yeoman.Base.extend({
     }
   },
 
-  scaffolding: function () {
-    mkdirp(this.props.dev_css);
+  scaffolding: function () {kmkdirp(this.props.dev_css);
     mkdirp(this.props.dev_js);
     mkdirp(this.props.dev_sass);
     mkdirp(this.props.dev_templates);
