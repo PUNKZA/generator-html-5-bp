@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     // compile sass
     sass: {
       options: {
-        style: 'expanded'
+        style: 'expanded' // options: compressed,  
         // lineNumbers: true
       },
       dist: {
@@ -17,30 +17,22 @@ module.exports = function (grunt) {
     },
 
     // add vendor-specific prefixes from Can I Use
-    autoprefixer: {
-      options: {
-        browsers: 'ie 9'
-      },
-      default: {
-        src: 'dev/assets/css/default.noprefix.css',
-        dest: 'dist/assets/css/default.css'
-      },
-      smart: {
-        src: 'dev/assets/css/smart.noprefix.css',
-        dest: 'dist/assets/css/smart.css'
-      }
-    },
-
-    // css min
-    cssmin: {
-        target: {
-            files: [{
-                expand: true,
-                cwd: 'dist/assets/css',
-                src: ['*.css', '!*.min.css'],
-                dest: 'dist/assets/css',
-                ext: '.min.css'
-            }]
+    postcss: {
+        options: {
+            map: false,
+            processors: [
+                require('autoprefixer')({
+                    browsers: ['last 2 versions']
+                })
+            ]
+        },
+        default: {
+            src: 'dev/assets/css/default.noprefix.css',
+            dest: 'dist/assets/css/default.css'
+        },
+        smart: {
+            src: 'dev/assets/css/smart.noprefix.css',
+            dest: 'dist/assets/css/smart.css'
         }
     },
 
@@ -109,8 +101,7 @@ module.exports = function (grunt) {
     }
   });
 
-  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-  require('matchdep').filterDev('css-sprite').forEach(grunt.loadNpmTasks);
+  require('matchdep').filterDev(['grunt-*', 'css-sprite', 'postcss']).forEach(grunt.loadNpmTasks);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['copy', 'css_sprite', 'sass', 'compile-handlebars', 'autoprefixer', 'cssmin', 'watch', 'livereload']);
+  grunt.registerTask('build', ['copy', 'css_sprite', 'sass', 'compile-handlebars', 'autoprefixer', 'watch', 'livereload']);
 };
