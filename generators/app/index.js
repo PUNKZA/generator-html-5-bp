@@ -15,7 +15,7 @@ function createProject(name) {
 function initLaravel(name, context) {
   context.log(chalk.blue('Creating Laravel project via Composer in ' + path.resolve('./' + name)));
   execs('composer create-project laravel/laravel ./' + name, {
-    stdio: [0,1,2]
+    stdio: [0, 1, 2]
   });
 }
 
@@ -40,12 +40,12 @@ module.exports = yeoman.Base.extend({
         return str.length > 0;
       },
       store: true
-    },{
+    }, {
       type: 'list',
       name: 'backend',
       message: 'Are you generating a static html project, or a php application?',
-      filter: function(val) {
-        if(val !== '1' && val !== '2') {
+      filter: function (val) {
+        if (val !== '1' && val !== '2') {
           val = '1';
         }
 
@@ -54,12 +54,12 @@ module.exports = yeoman.Base.extend({
       choices: [{
         name: 'Static (No Backend)',
         value: '1'
-      },{
+      }, {
         name: 'PHP (Laravel)',
         value: '2'
       }],
       store: true
-    },{
+    }, {
       type: 'checkbox',
       name: 'sprite',
       message: 'Would you like sprite generation? ' + chalk.blue('Note: You will need to use node versions 0.12 and below to use'),
@@ -79,7 +79,7 @@ module.exports = yeoman.Base.extend({
       this.props.basedir = path.resolve(process.cwd() + '/' + this.props.name);
       this.log(chalk.green('Project basedir set to: ' + this.props.basedir));
 
-      if(this.props.backend == '2') {
+      if (this.props.backend === '2') {
         initLaravel(this.props.name, this);
       }
 
@@ -95,47 +95,47 @@ module.exports = yeoman.Base.extend({
     }
   },
 
-  directories: function() {
+  directories: function () {
     // Static template
-    if(this.props.backend === '1') {
+    if (this.props.backend === '1') {
       this.props.dir = 'dev/assets';
-      this.props.dev_css = 'dev/assets/css';
-      this.props.dev_js = 'dev/assets/js/partials';
-      this.props.dev_sass = 'dev/assets/sass';
-      this.props.dev_templates = 'dev/templates/';
-      this.props.dev_sprites = 'dev/assets/sprites';
+      this.props.devCss = 'dev/assets/css';
+      this.props.devJs = 'dev/assets/js/partials';
+      this.props.devSass = 'dev/assets/sass';
+      this.props.devTemplates = 'dev/templates/';
+      this.props.devSprites = 'dev/assets/sprites';
 
-      this.props.dist_css = 'dist/assets/css';
-      this.props.dist_js = 'dist/assets/js/vendor';
-      this.props.dist_img = 'dist/assets/img';
-      this.props.dist_fonts = 'dist/assets/fonts';
+      this.props.distCss = 'dist/assets/css';
+      this.props.distJs = 'dist/assets/js/vendor';
+      this.props.distImg = 'dist/assets/img';
+      this.props.distFonts = 'dist/assets/fonts';
     }
     // Laravel project
-    else if(this.props.backend === '2') {
+    else if (this.props.backend === '2') {
       this.props.dir = 'resources/assets';
-      this.props.dev_css = 'resources/assets/css';
-      this.props.dev_js = 'resources/assets/js/partials';
-      this.props.dev_sass = 'resources/assets/sass';
-      this.props.dev_templates = 'resources/assets/templates/partials';
-      this.props.dev_sprites = 'resources/assets/sprites';
+      this.props.devCss = 'resources/assets/css';
+      this.props.devJs = 'resources/assets/js/partials';
+      this.props.devSass = 'resources/assets/sass';
+      this.props.devTemplates = 'resources/assets/templates/partials';
+      this.props.devSprites = 'resources/assets/sprites';
 
-      this.props.dist_css = 'public/assets/css';
-      this.props.dist_js = 'public/assets/js/vendor';
-      this.props.dist_img = 'public/assets/img';
-      this.props.dist_fonts = 'public/assets/fonts';
+      this.props.distCss = 'public/assets/css';
+      this.props.distJs = 'public/assets/js/vendor';
+      this.props.distImg = 'public/assets/img';
+      this.props.distFonts = 'public/assets/fonts';
     }
   },
 
   scaffolding: function () {
-    mkdirp(this.props.dev_css);
-    mkdirp(this.props.dev_js);
-    mkdirp(this.props.dev_sass);
-    mkdirp(this.props.dev_templates);
-    mkdirp(this.props.dev_sprites);
-    mkdirp(this.props.dist_css);
-    mkdirp(this.props.dist_js);
-    mkdirp(this.props.dist_img);
-    mkdirp(this.props.dist_fonts);
+    mkdirp(this.props.devCss);
+    mkdirp(this.props.devJs);
+    mkdirp(this.props.devSass);
+    mkdirp(this.props.devTemplates);
+    mkdirp(this.props.devSprites);
+    mkdirp(this.props.distCss);
+    mkdirp(this.props.distJs);
+    mkdirp(this.props.distImg);
+    mkdirp(this.props.distFonts);
 
     this.log('Scaffold created \n');
   },
@@ -144,21 +144,21 @@ module.exports = yeoman.Base.extend({
     // copy base template
     this.fs.copy(
       this.templatePath('_index.html'),
-      this.destinationPath(this.props.dev_templates + '/index.html')
+      this.destinationPath(this.props.devTemplates + '/index.html')
     );
 
     this.fs.copy(
       this.templatePath('_header.html'),
-      this.destinationPath(this.props.dev_templates + '/partials/header.html')
+      this.destinationPath(this.props.devTemplates + '/partials/header.html')
     );
 
     this.fs.copy(
       this.templatePath('_footer.html'),
-      this.destinationPath(this.props.dev_templates + '/partials/footer.html')
+      this.destinationPath(this.props.devTemplates + '/partials/footer.html')
     );
 
     this.fs.copy(
-      this.templatePath('sass/**/*'), 
+      this.templatePath('sass/**/*'),
       this.destinationPath(this.props.dir + '/sass')
     );
 
@@ -199,7 +199,7 @@ module.exports = yeoman.Base.extend({
     exec('git init');
   },
 
-  install: function() {
+  install: function () {
     this.npmInstall();
   },
 
