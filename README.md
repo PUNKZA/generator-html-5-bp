@@ -1,6 +1,7 @@
 # generator-html-5-bp [![NPM version][npm-image]][npm-url]
 > A simple html5 & grunt setup for front end web development
 
+
 ## Installation
 
 First, install [Yeoman](http://yeoman.io) and generator-html-5-bp using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
@@ -26,6 +27,7 @@ If you wish to run the php generator you will be required to have the following 
 
 Refer to these docs if you'd like to know more https://laravel.com/docs/5.1/installation
 
+
 ## Static HTML or PHP Application
 
 Once the generator is up and running tou should see the following:
@@ -39,10 +41,31 @@ At this point you only need to name the project. This will be the name of the di
 You have the option to generate a static html project (boilerplate) for front end development or a php application (laravel). Once the project has been scaffolded the npm installation will take place.
 
 
+## GIT
+
+After generation has been completed git will have been initialized. Add this your .gitignore file so that you don't add any unneccessary or redundant files.
+
+```bash
+dist/*
+!dist/assets/
+
+dist/assets/*
+!dist/assets/img/
+!dist/assets/fonts/
+
+dev/assets/css/*
+*.DS_Store
+*.sln
+Web.config
+*.sass-cache
+node_modules
+npm-debug.log
+```
+
+
 ## License
 
 MIT © [Punk]()
-
 
 [npm-image]: https://badge.fury.io/js/generator-html-5-bp.svg
 [npm-url]: https://npmjs.org/package/generator-html-5-bp
