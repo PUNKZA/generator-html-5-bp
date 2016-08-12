@@ -30,7 +30,7 @@ Refer to these docs if you'd like to know more https://laravel.com/docs/5.1/inst
 
 ## Static HTML or PHP Application
 
-Once the generator is up and running tou should see the following:
+Once the generator is up and running you should see the following:
 
 ![Alt text](/readme/screenshots/1.png?raw=true)
 
