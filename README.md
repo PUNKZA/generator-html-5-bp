@@ -58,7 +58,7 @@ Add this to that file and save
 
 Once you've completed all of the above, run the following
 ```bash
-	$ source ~/.bash_profile
+	$ source ~/.profile
 	$ sudo apachectl restart
 ```
 
