@@ -18,8 +18,8 @@ e.g Your package is sitting at version 1 like this; npm-test@1.0.0 and you've ma
 The version will hav updated the last number like this: npm-test@1.0.1.
 
 For semantic versioning and when to update which number read this:
-*[Semantic versioning](https://docs.npmjs.com/getting-started/semantic-versioning)
-*[NPM incrementing versions](http://tstringer.github.io/npm/npmjs/2015/10/29/npm-incrementing-version.html)
+* [Semantic versioning](https://docs.npmjs.com/getting-started/semantic-versioning)
+* [NPM incrementing versions](http://tstringer.github.io/npm/npmjs/2015/10/29/npm-incrementing-version.html)
 
 
 Test: Go to https://npmjs.com/package/<package>. You should see the information for your new package.
