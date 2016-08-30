@@ -4,17 +4,15 @@
   margin: 0
   padding: 0
 
-
 /* Variables */
 $wrapper: 80rem
 $gutter: 1rem
 
 /* Grid */
 =row($inside: false)
-  @if($inside == true)
+  @if $inside == true
     margin-left: -$gutter/2
     margin-right: -$gutter/2
-
   @else
     width: 100%
     max-width: $wrapper
@@ -30,7 +28,7 @@ $gutter: 1rem
 =col($width: 1, $padding: true)
   float: left
   width: percentage($width)
-  @if($padding == true)
+  @if $padding == true
     padding-left: $gutter/2
     padding-right: $gutter/2
 

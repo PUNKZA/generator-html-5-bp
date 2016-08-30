@@ -39,6 +39,29 @@ At this point you only need to name the project. This will be the name of the di
 You have the option to generate a static html project (boilerplate) for front end development or a php application (laravel). Once the project has been scaffolded the npm installation will take place.
 
 
+## GIT
+
+After generation has been completed git will have been initialized. Add this your .gitignore file so that you don't add any unneccessary or redundant files.
+
+```bash
+dist/*
+!dist/assets/
+
+dist/assets/*
+!dist/assets/img/
+!dist/assets/fonts/
+
+dev/assets/css/*
+*.DS_Store
+*.sln
+Web.config
+*.sass-cache
+node_modules
+npm-debug.log
+```
+
+
+
 ## License
 
 MIT © [Punk]()

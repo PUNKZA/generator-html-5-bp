@@ -1,9 +1,8 @@
 {
   "name": "<%= name %>",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Punk",
   "private": true,
-  "engineStrict" : true,
   "engines": {
     "node": ">=4.4.5"
   },
@@ -30,7 +29,6 @@
     "path": "^0.12.7"
   },
   "scripts": {
-    "start": "grunt build",
-    "serve": "grunt build && grunt express"
+    "start": "grunt build"
   }
 }

@@ -1,3 +1,5 @@
+var config = require('./config');
+
 module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -84,7 +86,7 @@ module.exports = function (grunt) {
       },
       css: {
         files: ['dev/assets/sass/**/*', 'dev/templates/**/*', 'dev/assets/sprite/**/*'],
-        tasks: ['css_sprite', 'sass', 'autoprefixer', 'copy:js_to_frontend', 'compile-handlebars']
+        tasks: [/*'css-sprite',*/ 'sass', 'postcss', 'copy:js_to_frontend', 'compile-handlebars']
       },
       js: {
         files: ['dev/assets/js/**/*'],
@@ -101,7 +103,12 @@ module.exports = function (grunt) {
     }
   });
 
-  require('matchdep').filterDev(['grunt-*', 'css-sprite', 'postcss']).forEach(grunt.loadNpmTasks);
+  require('matchdep').filterDev(['grunt-*', /*'css-sprite',*/]).forEach(grunt.loadNpmTasks);
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['copy', 'css_sprite', 'sass', 'compile-handlebars', 'autoprefixer', 'watch', 'livereload']);
+
+  if (config.USE_EXPRESS) {
+    grunt.registerTask('build', ['copy', /*'css_sprite',*/ 'sass', 'compile-handlebars', 'postcss', 'express', 'watch', 'livereload']);
+  }else{
+    grunt.registerTask('build', ['copy', /*'css_sprite',*/ 'sass', 'compile-handlebars', 'postcss', 'watch', 'livereload']);
+  }
 };
