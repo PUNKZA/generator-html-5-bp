@@ -98,6 +98,9 @@ You have the option to generate a static html project (boilerplate) for front en
 
 After generation has been completed git will have been initialized. Add this your .gitignore file so that you don't add any unneccessary or redundant files.
 
+### Note:
+This is intended for the static build
+
 ```bash
 dist/*
 !dist/assets/
@@ -114,6 +117,7 @@ Web.config
 node_modules
 npm-debug.log
 ```
+
 
 
 ## License
