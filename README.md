@@ -7,8 +7,8 @@
 First, install [Yeoman](http://yeoman.io) and generator-html-5-bp using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
-npm install -g yo
-npm install -g generator-html-5-bp
+$ npm install -g yo
+$ npm install -g generator-html-5-bp
 ```
 
 ## Start
@@ -16,14 +16,67 @@ npm install -g generator-html-5-bp
 You can now run the generator:
 
 ```bash
-yo html-5-bp
+$ yo html-5-bp
 ```
 
-## Note:
+### Updates
+
+Updates are added from time to time. Make sure you're updated to the latest version of the generator by running:
+
+```bash
+$ npm update -g generator-html-5-bp
+```
+
+### Note:
 
 If you wish to run the php generator you will be required to have the following installed on your machine.
  * PHP >= 5.5.9
  * Composer (Dependency manager)
+
+
+
+
+### Installing PHP
+
+First check which version of php you're on
+```bash
+	$ php -v
+```
+Next run this curl command to update to 5.6/7
+```bash
+	$ curl -s http://php-osx.liip.ch/install.sh | bash -s 5.6
+```
+Now you need to update the PATH variable to reference the new php version
+```bash
+	$ vim ~/.profile
+```
+
+Add this to that file and save
+```bash
+	$ export PATH=/usr/local/php5/bin:$PATH
+```
+
+Once you've completed all of the above, run the following
+```bash
+	$ source ~/.bash_profile
+	$ sudo apachectl restart
+```
+
+Run php -v once again to check the version has updated
+
+
+
+
+### Installing Composer
+
+Please make sure this is run in root folder, and once done make sure it has been install to /usr/local/bin
+
+```bash
+	$ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	$ php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	$ php composer-setup.php
+	$ php -r "unlink('composer-setup.php');"
+```
 
 Refer to these docs if you'd like to know more https://laravel.com/docs/5.1/installation
 

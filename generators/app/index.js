@@ -116,13 +116,12 @@ module.exports = yeoman.Base.extend({
       this.props.devCss = 'resources/assets/css';
       this.props.devJs = 'resources/assets/js/partials';
       this.props.devSass = 'resources/assets/sass';
-      this.props.devTemplates = 'resources/assets/templates/partials';
       this.props.devSprites = 'resources/assets/sprites';
 
-      this.props.distCss = 'public/assets/css';
-      this.props.distJs = 'public/assets/js/vendor';
-      this.props.distImg = 'public/assets/img';
-      this.props.distFonts = 'public/assets/fonts';
+      this.props.distCss = 'public/css';
+      this.props.distJs = 'public/js/vendor';
+      this.props.distImg = 'public/img';
+      this.props.distFonts = 'public/fonts';
     }
   },
 
@@ -130,8 +129,12 @@ module.exports = yeoman.Base.extend({
     mkdirp(this.props.devCss);
     mkdirp(this.props.devJs);
     mkdirp(this.props.devSass);
-    mkdirp(this.props.devTemplates);
     mkdirp(this.props.devSprites);
+    
+    if (this.props.backend === '1'){
+       mkdirp(this.props.devTemplates);
+    }
+
     mkdirp(this.props.distCss);
     mkdirp(this.props.distJs);
     mkdirp(this.props.distImg);
@@ -142,20 +145,22 @@ module.exports = yeoman.Base.extend({
 
   writing: function () {
     // copy base template
-    this.fs.copy(
-      this.templatePath('_index.html'),
-      this.destinationPath(this.props.devTemplates + '/index.html')
-    );
+    if (this.props.backend === '1'){
+      this.fs.copy(
+        this.templatePath('_index.html'),
+        this.destinationPath(this.props.devTemplates + '/index.html')
+      );
 
-    this.fs.copy(
-      this.templatePath('_header.html'),
-      this.destinationPath(this.props.devTemplates + '/partials/header.html')
-    );
+      this.fs.copy(
+        this.templatePath('_header.html'),
+        this.destinationPath(this.props.devTemplates + '/partials/header.html')
+      );
 
-    this.fs.copy(
-      this.templatePath('_footer.html'),
-      this.destinationPath(this.props.devTemplates + '/partials/footer.html')
-    );
+      this.fs.copy(
+        this.templatePath('_footer.html'),
+        this.destinationPath(this.props.devTemplates + '/partials/footer.html')
+      );
+    }
 
     this.fs.copy(
       this.templatePath('sass/**/*'),
@@ -167,29 +172,47 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(this.props.dir + '/js/index.js')
     );
 
-    // copy config files
-    this.fs.copyTpl(
-      this.templatePath('_package.json'),
-      this.destinationPath('package.json'), {
-        name: this.props.name,
-        gensprite: this.props.sprite[0]
-      }
-    );
+    if (this.props.backend === '1'){
+      // copy config files
+      this.fs.copyTpl(
+        this.templatePath('_package.json'),
+        this.destinationPath('package.json'), {
+          name: this.props.name,
+          gensprite: this.props.sprite[0]
+        }
+      );
+      
+      this.fs.copy(
+        this.templatePath('_gruntfile.js'),
+        this.destinationPath('Gruntfile.js')
+      );
 
-    this.fs.copy(
-      this.templatePath('_gruntfile.js'),
-      this.destinationPath('Gruntfile.js')
-    );
+      this.fs.copy(
+        this.templatePath('_config.js'),
+        this.destinationPath('config.js')
+      );
 
-    this.fs.copy(
-      this.templatePath('_config.js'),
-      this.destinationPath('config.js')
-    );
-
-    this.fs.copy(
-      this.templatePath('_server.js'),
-      this.destinationPath('server.js')
-    );
+      this.fs.copy(
+        this.templatePath('_server.js'),
+        this.destinationPath('server.js')
+      );
+    }
+    else{
+      // copy config files
+      this.fs.copyTpl(
+        this.templatePath('_package.json'),
+        this.destinationPath('resources/package.json'), {
+          name: this.props.name,
+          gensprite: this.props.sprite[0]
+        }
+      );
+      
+      this.fs.copy(
+        this.templatePath('_gruntfile-laravel.js'),
+        this.destinationPath('resources/Gruntfile.js')
+      );
+    }
+    
   },
 
   git: function () {
