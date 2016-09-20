@@ -99,15 +99,10 @@
   @each $font in $fonts
     @font-face
       font-family: #{$font}
-      src: url("../fonts/#{$font}/#{$font}-webfont.eot")
-      src: url("../fonts/#{$font}/#{$font}-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/#{$font}/#{$font}-webfont.woff") format("woff"), url("../fonts/#{$font}/#{$font}-webfont.ttf") format("truetype"), url("../fonts/#{$font}/#{$font}-webfont.svg") format("svg")
+      src: url("../fonts/#{$font}/#{$font}-webfont.woff2") format("woff2"),
+      src: url("../fonts/#{$font}/#{$font}-webfont.woff") format("woff")
       font-weight: normal
       font-style: normal
-      -webkit-font-smoothing: antialiased
-
-    @media screen and (-webkit-min-device-pixel-ratio: 0)
-      font-family: #{$font}
-      src: url("../fonts/#{$font}/#{$font}-webfont.svg") format("svg")
 
 /////////////////////////////////////////////////////////////////////////////
 ///////////////////// MEDIA QUERY / MEDIA DISTINCTION ///////////////////////
